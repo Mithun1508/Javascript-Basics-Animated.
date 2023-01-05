@@ -23,7 +23,8 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
      
      5) The callback is added to the call stack, gets invoked, and returns a value, and gets popped off the stack.
      
-     ![5](https://user-images.githubusercontent.com/93249038/210690484-95cffbde-fc59-407f-b5f9-0ca33bb15db1.jpg)
+    
+![5](https://user-images.githubusercontent.com/93249038/210690679-1641c905-1f46-4597-b868-1f8aed4db220.jpg)
 
       
       Let's see what if we run the below code on the browser:
@@ -34,7 +35,9 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
       bar();
       foo();
       baz();
-      ![6](https://user-images.githubusercontent.com/93249038/210690521-bd41bd3e-85dc-4d22-9763-5d9dcdc6cecd.jpg)
+     
+     
+![6](https://user-images.githubusercontent.com/93249038/210690704-700a5ab8-1ea3-4189-867d-6f1caf8c45d6.jpg)
 
     
     1) We invoke bar. bar returns a setTimeout function.
