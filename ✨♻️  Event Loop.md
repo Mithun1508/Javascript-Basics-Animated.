@@ -2,19 +2,45 @@ JavaScript is single-threaded: only one task can run at a time. Usually that’s
 
 Luckily, the browser gives us some features that the JavaScript engine itself doesn’t provide: a Web API. This includes the DOM API, setTimeout, HTTP requests, and so on. This can help us create some async, non-blocking behavior 🚀
 
-When we invoke a function, it gets added to something called the call stack. The call stack is part of the JS engine, this isn’t browser specific. It’s a stack, meaning that it’s first in, last out (think of a pile of pancakes). When a function returns a value, it gets popped off the stack 👋
+  1) When we invoke a function, it gets added to something called the call stack. The call stack is part of the JS engine, this isn’t browser specific. It’s a stack, meaning that it’s first in, last out (think of a pile of pancakes). When a function returns a value, it gets popped off the stack 👋
 
    ![1](https://user-images.githubusercontent.com/93249038/210689043-70692378-b7f5-4e50-94bb-18cbfcffd074.jpg)
 
-   The respond function returns a setTimeout function. The setTimeout is provided to us by the Web API: it lets us delay tasks without blocking the main thread. The callback function that we passed to the setTimeout function, the arrow function () => { return 'Hey' } gets added to the Web API. In the meantime, the setTimeout function and the respond function get popped off the stack, they both returned their values!
+  2) The respond function returns a setTimeout function. The setTimeout is provided to us by the Web API: it lets us delay tasks without blocking the main thread. The callback function that we passed to the setTimeout function, the arrow function () => { return 'Hey' } gets added to the Web API. In the meantime, the setTimeout function and the respond function get popped off the stack, they both returned their values!
 
    ![2](https://user-images.githubusercontent.com/93249038/210689153-cefb7d78-faf1-414c-867d-5b7940689d6e.jpg)   
 
-  In the Web API, a timer runs for as long as the second argument we passed to it, 1000ms. The callback doesn’t immediately get added to the call stack, instead it’s passed to something called the queue.
+  3) In the Web API, a timer runs for as long as the second argument we passed to it, 1000ms. The callback doesn’t immediately get added to the call stack, instead it’s passed to something called the queue.
   
-    ![3](https://user-images.githubusercontent.com/93249038/210689292-c8184510-854a-4925-951b-e03dea2df0e2.jpg)
+    ![3](https://user-images.githubusercontent.com/93249038/210689513-3bac102b-8ae6-4b09-893f-9043241953b7.jpg)
 
-      This can be a confusing part: it doesn't mean that the callback function gets added to the callstack(thus returns a value) after 1000ms! It simply gets added to the queue after 1000ms. But it’s a queue, the function has got to wait for its turn!
+
+     4) This can be a confusing part: it doesn't mean that the callback function gets added to the callstack(thus returns a value) after 1000ms! It simply gets added to the queue after 1000ms. But it’s a queue, the function has got to wait for its turn!
 
    Now this is the part we’ve all been waiting for… Time for the event loop to do its only task: connecting the queue with the call stack! If the call stack is empty, so if all previously invoked functions have returned their values and have been popped off the stack, the first item in the queue gets added to the call stack. In this case, no other functions were invoked, meaning that the call stack was empty by the time the callback function was the first item in the queue.
-      ![4](https://user-images.githubusercontent.com/93249038/210689389-b27f140a-4671-40d4-8061-bfeb3269e16f.jpg)
+   
+     ![4](https://user-images.githubusercontent.com/93249038/210689389-b27f140a-4671-40d4-8061-bfeb3269e16f.jpg)
+     
+     The callback is added to the call stack, gets invoked, and returns a value, and gets popped off the stack.
+     
+      ![5](https://user-images.githubusercontent.com/93249038/210689651-059bce7c-7ab6-4fa9-a1fc-579b5fa24c57.jpg)
+      
+      Let's see what if we run the below code on the browser:
+      
+      const foo = () => console.log("First");
+      const bar = () => setTimeout(() => console.log("Second"), 500);
+      const baz = () => console.log("Third");
+      bar();
+      foo();
+      baz();
+      
+     ![6](https://user-images.githubusercontent.com/93249038/210690016-2a125f7b-0597-42c8-850d-df47f25935aa.jpg)
+     
+    1) We invoke bar. bar returns a setTimeout function.
+    2) The callback we passed to setTimeout gets added to the Web API, the setTimeout function and bar get popped off the callstack.
+    3) The timer runs, in the meantime foo gets invoked and logs First. foo returns (undefined),baz gets invoked, and the callback gets added to the queue.
+baz logs Third. 
+    4) The event loop sees the callstack is empty after baz returned, after which the callback gets added to the call stack.
+    5) The callback logs Second.
+
+
