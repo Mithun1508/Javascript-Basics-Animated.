@@ -11,8 +11,9 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
    ![2](https://user-images.githubusercontent.com/93249038/210689153-cefb7d78-faf1-414c-867d-5b7940689d6e.jpg)   
 
   3) In the Web API, a timer runs for as long as the second argument we passed to it, 1000ms. The callback doesn’t immediately get added to the call stack, instead it’s passed to something called the queue.
-  
-    ![3](https://user-images.githubusercontent.com/93249038/210689513-3bac102b-8ae6-4b09-893f-9043241953b7.jpg)
+       
+       
+![3](https://user-images.githubusercontent.com/93249038/210690292-b8aeb1d0-e132-49c8-9ef6-e7a32394b7b1.jpg)
 
 
      4) This can be a confusing part: it doesn't mean that the callback function gets added to the callstack(thus returns a value) after 1000ms! It simply gets added to the queue after 1000ms. But it’s a queue, the function has got to wait for its turn!
