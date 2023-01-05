@@ -17,8 +17,7 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
 
 
      4) This can be a confusing part: it doesn't mean that the callback function gets added to the callstack(thus returns a value) after 1000ms! It simply gets added to the queue after 1000ms. But it’s a queue, the function has got to wait for its turn!  Now this is the part we’ve all been waiting for… Time for the event loop to do its only task: connecting the queue with the call stack! If the call stack is empty, so if all previously invoked functions have returned their values and have been popped off the stack, the first item in the queue gets added to the call stack. In this case, no other functions were invoked, meaning that the call stack was empty by the time the callback function was the first item in the queue.
-  
-   ![4](https://user-images.githubusercontent.com/93249038/210690431-9c3ecbb7-5a0b-4ddb-af1b-9b59d907917b.jpg)
+     ![4](https://user-images.githubusercontent.com/93249038/210690431-9c3ecbb7-5a0b-4ddb-af1b-9b59d907917b.jpg)
 
      
      5) The callback is added to the call stack, gets invoked, and returns a value, and gets popped off the stack.
@@ -38,8 +37,7 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
      
      
 ![6](https://user-images.githubusercontent.com/93249038/210690704-700a5ab8-1ea3-4189-867d-6f1caf8c45d6.jpg)
-
-    
+    # STEPS:
     1) We invoke bar. bar returns a setTimeout function.
     2) The callback we passed to setTimeout gets added to the Web API, the setTimeout function and bar get popped off the callstack.
     3) The timer runs, in the meantime foo gets invoked and logs First. foo returns (undefined),baz gets invoked, and the callback gets added to the queue.
