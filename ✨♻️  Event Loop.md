@@ -17,9 +17,10 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
 
 
      4) This can be a confusing part: it doesn't mean that the callback function gets added to the callstack(thus returns a value) after 1000ms! It simply gets added to the queue after 1000ms. But it’s a queue, the function has got to wait for its turn!  Now this is the part we’ve all been waiting for… Time for the event loop to do its only task: connecting the queue with the call stack! If the call stack is empty, so if all previously invoked functions have returned their values and have been popped off the stack, the first item in the queue gets added to the call stack. In this case, no other functions were invoked, meaning that the call stack was empty by the time the callback function was the first item in the queue.
-     ![4](https://user-images.githubusercontent.com/93249038/210690431-9c3ecbb7-5a0b-4ddb-af1b-9b59d907917b.jpg)
+    
 
-     
+     ![4](https://user-images.githubusercontent.com/93249038/210691041-e0856bf6-7813-4b0d-b821-2401702874e2.jpg)
+
      5) The callback is added to the call stack, gets invoked, and returns a value, and gets popped off the stack.
      
     
