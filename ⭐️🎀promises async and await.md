@@ -168,7 +168,7 @@ When encountering an await keyword, the async function gets suspended. ✋🏼 T
 ![async ](https://user-images.githubusercontent.com/93249038/210707865-239ddea9-8f38-4e7a-852c-06a767da6142.jpg)
 Now that the async function myFunc is suspended as it encountered the await keyword, the engine jumps out of the async function and continues executing the code in the execution context in which the async function got called: the global execution context in this case! 🏃🏽‍♀️
 
-![Uploading async 2 .jpg…]()
+![async 2 ](https://user-images.githubusercontent.com/93249038/210708031-df92d8ea-e68f-4c98-913e-9d47299d8871.jpg)
 
 
 Finally, there are no more tasks to run in the global execution context! The event loop checks to see if there are any microtasks queued up: and there are! The async myFunc function is queued up after resolving the valued of one. myFunc gets popped back onto the call stack, and continues running where it previously left off.
