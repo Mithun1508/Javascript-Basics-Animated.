@@ -16,15 +16,15 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
 ![3](https://user-images.githubusercontent.com/93249038/210690292-b8aeb1d0-e132-49c8-9ef6-e7a32394b7b1.jpg)
 
 
-     4) This can be a confusing part: it doesn't mean that the callback function gets added to the callstack(thus returns a value) after 1000ms! It simply gets added to the queue after 1000ms. But it’s a queue, the function has got to wait for its turn!
+     4) This can be a confusing part: it doesn't mean that the callback function gets added to the callstack(thus returns a value) after 1000ms! It simply gets added to the queue after 1000ms. But it’s a queue, the function has got to wait for its turn!  Now this is the part we’ve all been waiting for… Time for the event loop to do its only task: connecting the queue with the call stack! If the call stack is empty, so if all previously invoked functions have returned their values and have been popped off the stack, the first item in the queue gets added to the call stack. In this case, no other functions were invoked, meaning that the call stack was empty by the time the callback function was the first item in the queue.
+  
+   ![4](https://user-images.githubusercontent.com/93249038/210690431-9c3ecbb7-5a0b-4ddb-af1b-9b59d907917b.jpg)
 
-   Now this is the part we’ve all been waiting for… Time for the event loop to do its only task: connecting the queue with the call stack! If the call stack is empty, so if all previously invoked functions have returned their values and have been popped off the stack, the first item in the queue gets added to the call stack. In this case, no other functions were invoked, meaning that the call stack was empty by the time the callback function was the first item in the queue.
-   
-     ![4](https://user-images.githubusercontent.com/93249038/210689389-b27f140a-4671-40d4-8061-bfeb3269e16f.jpg)
      
-     The callback is added to the call stack, gets invoked, and returns a value, and gets popped off the stack.
+     5) The callback is added to the call stack, gets invoked, and returns a value, and gets popped off the stack.
      
-      ![5](https://user-images.githubusercontent.com/93249038/210689651-059bce7c-7ab6-4fa9-a1fc-579b5fa24c57.jpg)
+     ![5](https://user-images.githubusercontent.com/93249038/210690484-95cffbde-fc59-407f-b5f9-0ca33bb15db1.jpg)
+
       
       Let's see what if we run the below code on the browser:
       
@@ -34,9 +34,9 @@ Luckily, the browser gives us some features that the JavaScript engine itself do
       bar();
       foo();
       baz();
-      
-     ![6](https://user-images.githubusercontent.com/93249038/210690016-2a125f7b-0597-42c8-850d-df47f25935aa.jpg)
-     
+      ![6](https://user-images.githubusercontent.com/93249038/210690521-bd41bd3e-85dc-4d22-9763-5d9dcdc6cecd.jpg)
+
+    
     1) We invoke bar. bar returns a setTimeout function.
     2) The callback we passed to setTimeout gets added to the Web API, the setTimeout function and bar get popped off the callstack.
     3) The timer runs, in the meantime foo gets invoked and logs First. foo returns (undefined),baz gets invoked, and the callback gets added to the queue.
